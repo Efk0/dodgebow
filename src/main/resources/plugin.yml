@@ -1,0 +1,13 @@
+name: DodgeBow
+version: ${project.version}
+main: eu.ondrejmatys.dodgebow.DodgeBow
+api-version: 1.14
+authors: [Efko0ss]
+description: Minigame
+website: https://ondrejmatys.eu
+commands:
+  dodgebow:
+    description: Base dodgebow command
+
+  dodgeadmin:
+    description: Admin commands for dodgebow
