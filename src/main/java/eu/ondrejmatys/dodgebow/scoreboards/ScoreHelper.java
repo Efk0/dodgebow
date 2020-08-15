@@ -66,10 +66,10 @@ public class ScoreHelper {
         }
 
         text = ChatColor.translateAlternateColorCodes('&', text);
-        String pre = getFirstSplit(text);
-        String suf = getFirstSplit(ChatColor.getLastColors(pre) + getSecondSplit(text));
-        team.setPrefix(pre);
-        team.setSuffix(suf);
+        /*String pre = getFirstSplit(text);
+        String suf = getFirstSplit(ChatColor.getLastColors(pre) + ChatColor.WHITE + getSecondSplit(text));
+        team.setPrefix(pre); */
+        team.setSuffix(text);
     }
 
     public void removeSlot(int slot) {

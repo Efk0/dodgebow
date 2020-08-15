@@ -3,7 +3,9 @@ package eu.ondrejmatys.dodgebow;
 import eu.ondrejmatys.dodgebow.arena.Arena;
 import eu.ondrejmatys.dodgebow.arena.LoadArenas;
 import eu.ondrejmatys.dodgebow.commands.AdminCommands;
+import eu.ondrejmatys.dodgebow.commands.AdminCompleter;
 import eu.ondrejmatys.dodgebow.commands.BaseCommand;
+import eu.ondrejmatys.dodgebow.commands.BaseCompleter;
 import eu.ondrejmatys.dodgebow.config.ConfigManager;
 import eu.ondrejmatys.dodgebow.events.EventsManager;
 import eu.ondrejmatys.dodgebow.messages.Message;
@@ -12,6 +14,7 @@ import eu.ondrejmatys.dodgebow.players.PlayerManager;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,7 +32,7 @@ public final class DodgeBow extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&eDodgebow &7>> &aSuccessfully started"));
+        System.out.println(ChatColor.translateAlternateColorCodes('&', "&eDodgebow &7>> &aSuccessfully started"));
         registerEvents();
         registerCommands();
         registerConfigs();
@@ -43,7 +46,7 @@ public final class DodgeBow extends JavaPlugin {
         for (DodgePlayer player : gamePlayers.values()) {
             PlayerManager.leavePlayerFromGame(player);
         }
-        getLogger().info(ChatColor.translateAlternateColorCodes('&', "&eDodgebow &7>> &aSuccessfully unloaded"));
+        System.out.println(ChatColor.translateAlternateColorCodes('&', "&eDodgebow &7>> &aSuccessfully unloaded"));
     }
 
     private void registerEvents() {
@@ -52,7 +55,9 @@ public final class DodgeBow extends JavaPlugin {
 
     private void registerCommands() {
         getCommand("dodgebow").setExecutor(new BaseCommand());
+        getCommand("dodgebow").setTabCompleter(new BaseCompleter());
         getCommand("dodgeadmin").setExecutor(new AdminCommands());
+        getCommand("dodgeadmin").setTabCompleter(new AdminCompleter());
     }
 
     private void registerConfigs() {

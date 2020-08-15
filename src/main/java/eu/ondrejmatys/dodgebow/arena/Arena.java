@@ -60,7 +60,6 @@ public class Arena extends Message {
     }
 
     public void saveArena(Player sender) {
-        System.out.println(plugin.getDataFolder() + "\\arenas");
         File config = new File(plugin.getDataFolder() + "\\arenas", this.name + ".yml");
         File arenaDirectory = new File(plugin.getDataFolder() + "\\arenas");
         try {

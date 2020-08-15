@@ -13,6 +13,7 @@ errors:
   spawnpointsfull: '&cSpawnpointů nemůže být více než hráčů'
   arenaingame2: '&cArena is in game!'
   cannotedit: '&cYou cannot edit running arena. Please switch to editing mode with /dodgeadmin arena edit <arena>'
+  cannotjoin: '&cThis arena is currently not available'
 
 arena:
   join: '&aHráč &e%s &a se připojil do hry &7(&e%s&f/&e%s&7)'
@@ -29,6 +30,7 @@ arena:
   immortalityEnd: '&aNesmrtelnost skončila'
   kill: '&aHráč &e%s &azasáhl hráče &e%s &7(&3%s životů&7)'
   win: '&aHráč &e%s vyhrává hru!'
+  edit: '&aAréna je připravena k editaci'
 
 creation:
   create: '&aAréna s názvem &e%s &abyla úspěšně vytvořena'
@@ -39,3 +41,28 @@ creation:
   resetspawn: '&aSpawnpointy byly úspěšně smazány'
   save: '&aAréna byla uložena a je připravena na hraní'
   remove: '&aArény byla úspěšně smazána'
+
+# These placeholders in scoreboard are supported
+# - %countdown%
+# - %count%
+# - %max%
+# - %arena%
+# - %lives% (ingame)
+scoreboard:
+  lobby:
+    title: '&6&lDODGEBOW'
+    lines:
+      - '&a&lCountdown: &r%countdown%'
+      - ''
+      - '&a&lPlayers: &r%count%/%max%'
+      - ''
+      - '&a&lArena: &r%arena%'
+  ingame:
+    title: '&6&lDODGEBOW'
+    lines:
+      - '&a&lCountdown: &r%countdown%'
+      - ''
+      - '&a&lPlayers: &r%min%/%max%'
+      - ''
+      - '&a&lArena: &r%arena%'
+

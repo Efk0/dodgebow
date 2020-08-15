@@ -8,6 +8,8 @@ website: https://ondrejmatys.eu
 commands:
   dodgebow:
     description: Base dodgebow command
+    aliases: [db]
 
   dodgeadmin:
     description: Admin commands for dodgebow
+    aliases: [da]

@@ -25,7 +25,8 @@ public class PlayerManager extends Message {
         }
 
         if (arena.status == Status.UNDONE) {
-
+            Message("messages", "errors.cannotjoin", player);
+            return;
         }
 
         if (arena.players.size() > arena.maxPlayers) {

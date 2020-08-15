@@ -1,6 +1,7 @@
 package eu.ondrejmatys.dodgebow.events;
 
 import eu.ondrejmatys.dodgebow.DodgeBow;
+import eu.ondrejmatys.dodgebow.config.ConfigManager;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
@@ -14,6 +15,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventsManager extends Message implements Listener {
 
@@ -87,7 +91,10 @@ public class EventsManager extends Message implements Listener {
     @EventHandler
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent event) {
         if (plugin.gamePlayers.containsKey(event.getPlayer())) {
-            event.setCancelled(true);
+            List<?> allowedCmds = ConfigManager.getInstance().getList(ConfigManager.getInstance().getConfig("config.yml"), "allowedCommands");
+            if (!allowedCmds.contains(event.getMessage())) {
+                event.setCancelled(true);
+            }
         }
     }
 

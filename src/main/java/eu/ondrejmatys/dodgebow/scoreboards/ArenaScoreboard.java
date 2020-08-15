@@ -1,13 +1,18 @@
 package eu.ondrejmatys.dodgebow.scoreboards;
 
 import eu.ondrejmatys.dodgebow.arena.Arena;
+import eu.ondrejmatys.dodgebow.config.ConfigManager;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class ArenaScoreboard {
 
@@ -27,12 +32,23 @@ public class ArenaScoreboard {
                 ScoreHelper.removeScore(p);
             }
 
+            ConfigManager config = ConfigManager.getInstance();
+            Placeholders.loadPlaceholders(player.arena, null);
+
             ScoreHelper helper = ScoreHelper.createScore(p);
-            helper.setTitle("&6&lDODGEBOW");
-            helper.setSlot(1, "&aOdpočet: &r" + arena.countdown);
-            helper.setSlot(3, "&aHráči: &r" + arena.getAllPlayers().size() + "/" + arena.maxPlayers);
-            helper.setSlot(5, "&aMapa: &r" + arena.name);
-            helper.setSlot(7, "&7&m--------------------");
+            helper.setTitle(Placeholders.translate(config.getString("messages", "scoreboard.lobby.title")));
+            List<?> lines = config.getList(config.getConfig("messages.yml"), "scoreboard.lobby.lines");
+
+            Collections.reverse(lines);
+            helper.setSlot(lines.size() + 1, "&7&m---------------------");
+            for(int i = lines.size() - 1; i >= 0; i--) {
+                String line = (String) lines.get(i);
+                if (line.equalsIgnoreCase("")) {
+                    helper.setSlot(i + 1, ChatColor.RESET.toString());
+                    continue;
+                }
+                helper.setSlot(i + 1, Placeholders.translate(line));
+            }
         }
     }
 
@@ -44,12 +60,23 @@ public class ArenaScoreboard {
                 ScoreHelper.removeScore(p);
             }
 
+            ConfigManager config = ConfigManager.getInstance();
+            Placeholders.loadPlaceholders(player.arena, player);
+
             ScoreHelper helper = ScoreHelper.createScore(p);
-            helper.setTitle("&6&lDODGEBOW");
-            helper.setSlot(1, "&aŽivoty: &r" + player.lives);
-            helper.setSlot(3, "&aHráčů: &r" + arena.players.size() + "/" + arena.maxPlayers);
-            helper.setSlot(5, "&aAréna: &r" + arena.name);
-            helper.setSlot(7, "&7&m--------------------");
+            helper.setTitle(Placeholders.translate(config.getString("messages", "scoreboard.ingame.title")));
+            List<?> lines = config.getList(config.getConfig("messages.yml"), "scoreboard.ingame.lines");
+
+            Collections.reverse(lines);
+            helper.setSlot(lines.size() + 1, "&7&m---------------------");
+            for(int i = lines.size() - 1; i >= 0; i--) {
+                String line = (String) lines.get(i);
+                if (line.equalsIgnoreCase("")) {
+                    helper.setSlot(i + 1, ChatColor.RESET.toString());
+                    continue;
+                }
+                helper.setSlot(i + 1, Placeholders.translate(line));
+            }
         }
     }
 }

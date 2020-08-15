@@ -64,6 +64,7 @@ public class ArenaCreator extends Message {
         if (command.equalsIgnoreCase("edit")) {
             Arena arena = findArenaWithName(args[0]);
             arena.editArena();
+            Message("messages", "arena.edit", sender);
         }
     }
 
@@ -98,10 +99,6 @@ public class ArenaCreator extends Message {
         Message(decoded, sender);
     }
 
-    private static void setLobbyLocation(Arena arena, Player sender) {
-        arena.lobbyLoc = sender.getLocation();
-    }
-
     private static void addSpawnPoint(Arena arena, Player sender) {
         if (arena.spawnLocations.size() >= arena.maxPlayers) {
             Message("messages", "errors.spawnpointsfull", sender);
@@ -114,17 +111,17 @@ public class ArenaCreator extends Message {
 
     private static void resetSpawnPoints(Arena arena, Player sender) {
         arena.spawnLocations = new ArrayList<Location>();
-        Message("messages", "cration.resetspawn", sender);
+        Message("messages", "creation.resetspawn", sender);
     }
 
     private static void setLobby(Arena arena, Player sender) {
         arena.lobbyLoc = sender.getLocation();
-        Message("messages", "cration.lobby", sender);
+        Message("messages", "creation.setlobby", sender);
     }
 
     private static void arenaRemove(Arena arena, Player sender) {
         arena.removeArena(sender);
-        Message("messages", "cration.remove", sender);
+        Message("messages", "creation.remove", sender);
     }
 
     private static void arenaSave(Arena arena, Player sender) {
