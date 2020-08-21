@@ -10,44 +10,38 @@ errors:
   arenaingame: '&cArena is already in game'
   arenaalreadyexists: '&cArena with this name already exists'
   arenanotexists: '&cThis arena does not exists'
-  spawnpointsfull: '&cSpawnpointů nemůže být více než hráčů'
+  spawnpointsfull: '&cMaximum number of spawnpoints is maximum number of players'
   arenaingame2: '&cArena is in game!'
   cannotedit: '&cYou cannot edit running arena. Please switch to editing mode with /dodgeadmin arena edit <arena>'
   cannotjoin: '&cThis arena is currently not available'
 
 arena:
-  join: '&aHráč &e%s &a se připojil do hry &7(&e%s&f/&e%s&7)'
-  youjoin: '&aPřipojil si se do hry &7(&e%s&f/&e%s&7)'
-  leave: '&aHráč &e%s &a se odpojil ze hry &7(&e%s&f/&e%s&7)'
-  youleave: '&aOdpojil si se ze hry &7(&e%s&f/&e%s&7)'
-  countdown: '&aHra začne za &e%s &asekund'
-  leaveDuringCountdown: '&aNení zde dostatek hráčů. Pozastavuji odpočítávání!'
-  arenafull: '&cAréna je již plná :('
-  arenashut: '&cTato aréna byla vypnuta'
-  editmode: '&aAréna přepnuta do režimu editace'
-  start: '&aHra začíná!'
-  immortalityCountDown: '&aNesmrtelnost skončí za &e%s sekund'
-  immortalityEnd: '&aNesmrtelnost skončila'
-  kill: '&aHráč &e%s &azasáhl hráče &e%s &7(&3%s životů&7)'
-  win: '&aHráč &e%s vyhrává hru!'
-  edit: '&aAréna je připravena k editaci'
+  join: '&e%s &a joined to the game &7(&e%s&f/&e%s&7)'
+  youjoin: '&aYou have joined &7(&e%s&f/&e%s&7)'
+  leave: '&e%s &a left the game &7(&e%s&f/&e%s&7)'
+  youleave: '&aYou left the game &7(&e%s&f/&e%s&7)'
+  countdown: '&aGame starting in &e%s &asecond(s)'
+  leaveDuringCountdown: '&aNot enough players. Terminating countdown!'
+  arenafull: '&cArena is full :('
+  arenashut: '&cThis arena is shutted down'
+  editmode: '&aThis arena is in edit mode'
+  start: '&aGame starting!'
+  immortalityCountDown: '&aImmortality ends in &e%s second(s)'
+  immortalityEnd: '&aImmortality ended'
+  kill: '&e%s &ahit &e%s &7(&3%s lives left&7)'
+  win: '&e%s WINS!'
+  edit: '&aArena is ready to edit'
 
 creation:
-  create: '&aAréna s názvem &e%s &abyla úspěšně vytvořena'
-  newmin: '&aNastaveno minimum hráčů na &e%s'
-  newmax: '&aNastaveno maximum hráčů na &e%s'
-  newspawn: '&aSpawnpoint &e(%s) &abyl nastaven na tvou pozici'
-  setlobby: '&aLobby spawnpoint byl nastaven na tvou pozici'
-  resetspawn: '&aSpawnpointy byly úspěšně smazány'
-  save: '&aAréna byla uložena a je připravena na hraní'
-  remove: '&aArény byla úspěšně smazána'
+  create: '&aArena with name &e%s &asuccessfully created'
+  newmin: '&aMinimum players set to &e%s'
+  newmax: '&aMaximum players set to &e%s'
+  newspawn: '&aSpawnpoint &e(%s) &aset to your location'
+  setlobby: '&aLobby spawnpoint was set to your location'
+  resetspawn: '&aSpawnpoints were reseted'
+  save: '&aArena was saved and is ready to play'
+  remove: '&aArena was successfully removed'
 
-# These placeholders in scoreboard are supported
-# - %countdown%
-# - %count%
-# - %max%
-# - %arena%
-# - %lives% (ingame)
 scoreboard:
   lobby:
     title: '&6&lDODGEBOW'

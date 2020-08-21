@@ -10,8 +10,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,8 +19,8 @@ import java.util.List;
 public class ConfigManager {
     private static ConfigManager single_inst = null;
 
-    private ArrayList<FileConfiguration> customConfigs = new ArrayList<FileConfiguration>();
-    private ArrayList<String> configNames = new ArrayList<String>();
+    private ArrayList<FileConfiguration> configs = new ArrayList<FileConfiguration>();
+    private String[] configNames = {"config.yml", "messages.yml"};
     private Plugin plugin = null;
 
     public void setPlugin(Plugin plugin) {
@@ -28,56 +28,56 @@ public class ConfigManager {
     }
 
     public FileConfiguration getConfig(String name){
-        if (customConfigs.size() > 0) {
-            for (FileConfiguration conf : customConfigs) {
+        if (configs.size() > 0) {
+            for (FileConfiguration conf : configs) {
                 if (conf.getName().equalsIgnoreCase(name)) {
                     return conf;
                 }
             }
         }
 
-        return createNewCustomConfig(name);
-    }
-
-    public void reloadConfigs(){
-        customConfigs.clear();
-        configNames.clear();
-    }
-
-    private FileConfiguration createNewCustomConfig(String name) {
-        FileConfiguration fileConfiguration;
-        File configFile = new File(plugin.getDataFolder(), name);
-        if (!configFile.exists()) {
-            configFile.getParentFile().mkdirs();
-            plugin.saveResource(name, false);
-        }
-
-        fileConfiguration = new YamlConfiguration();
-        try {
-            fileConfiguration.load(configFile);
-            customConfigs.add(fileConfiguration);
-            configNames.add(name);
-            return fileConfiguration;
-        } catch (IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
-    //Returns true if saved successfully, returns false in case of error and prints error to console
-    public boolean setData(FileConfiguration conf, String path, Object data){
-        conf.set(path, data);
-        return saveData(conf);
-    }
-
-    private boolean saveData(FileConfiguration conf){
-        try {
-            conf.save(new File(plugin.getDataFolder(), configNames.get(customConfigs.indexOf(conf))));
-        } catch (IOException e){
-            e.printStackTrace();
-            return false;
+    public void checkAndLoadConfigs() {
+        File dir = new File(String.valueOf(plugin.getDataFolder()));
+        if (!dir.exists()) {
+            dir.mkdir();
         }
-        return true;
+
+        for (String name : configNames) {
+            FileConfiguration newConfig;
+            FileConfiguration oldConfig;
+            File file = new File(plugin.getDataFolder(), name);
+            if (!file.exists()) {
+                plugin.saveResource(name, false);
+                oldConfig = YamlConfiguration.loadConfiguration(file);
+            } else {
+                Reader newConfigStream;
+                try {
+                    newConfigStream = new InputStreamReader(plugin.getResource(name), "UTF8");
+                } catch (UnsupportedEncodingException ex) {
+                    plugin.getPluginLoader().disablePlugin(plugin);
+                    return;
+                }
+                newConfig = YamlConfiguration.loadConfiguration(newConfigStream);
+                oldConfig = YamlConfiguration.loadConfiguration(new File(plugin.getDataFolder(), name));
+                for (String key : newConfig.getKeys(true)) {
+                    if (oldConfig.get(key) != null) {
+                        newConfig.set(key, oldConfig.get(key));
+                    }
+                }
+
+                try {
+                    newConfig.set("Moje", "Tvoje");
+                    newConfig.save(name);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+
+            configs.add(oldConfig);
+        }
     }
 
     public String getString(FileConfiguration conf, String path){
@@ -109,15 +109,6 @@ public class ConfigManager {
     public List<?> getList(FileConfiguration conf, String path){
 
         return conf.getList(path);
-    }
-
-    public boolean addLocation(FileConfiguration conf, Location location, String path){
-        conf.set(String.format("%s.world", path), location.getWorld().getName());
-        conf.set(String.format("%s.x", path), location.getX());
-        conf.set(String.format("%s.y", path), location.getY());
-        conf.set(String.format("%s.z", path), location.getZ());
-
-        return saveData(conf);
     }
 
     public Location getLocation(FileConfiguration conf, String path){

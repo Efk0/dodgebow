@@ -62,6 +62,7 @@ public final class DodgeBow extends JavaPlugin {
 
     private void registerConfigs() {
         ConfigManager.getInstance().setPlugin(this);
+        ConfigManager.getInstance().checkAndLoadConfigs();
     }
 
     public static DodgeBow getInstance() {
