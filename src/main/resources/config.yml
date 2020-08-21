@@ -1,13 +1,4 @@
+# Commands that are allowed to use in game
 allowedCommands:
   - '/dodgebow leave'
   - '/db leave'
-mysql:
-  enabled: false
-  host: 'localhost'
-  port: 3306
-  user: 'root'
-  pass: ''
-  db: 'dodgebow'
-bungee:
-  enabled: false
-  lobby: 'hub1'
