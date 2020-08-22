@@ -6,15 +6,14 @@ import eu.ondrejmatys.dodgebow.commands.AdminCommands;
 import eu.ondrejmatys.dodgebow.commands.AdminCompleter;
 import eu.ondrejmatys.dodgebow.commands.BaseCommand;
 import eu.ondrejmatys.dodgebow.commands.BaseCompleter;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
+import eu.ondrejmatys.dodgebow.config.SimpleConfig;
+import eu.ondrejmatys.dodgebow.config.SimpleConfigManager;
+import eu.ondrejmatys.dodgebow.config.configs.ConfigConfig;
+import eu.ondrejmatys.dodgebow.config.configs.MessagesConfig;
 import eu.ondrejmatys.dodgebow.events.EventsManager;
-import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
 import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,7 +24,11 @@ public final class DodgeBow extends JavaPlugin {
 
     public static DodgeBow instance;
 
-    public ConfigManager configManager;
+    public SimpleConfigManager configManager = new SimpleConfigManager(this);
+
+    public SimpleConfig mainConfig = configManager.getNewConfig("config.yml");
+    public SimpleConfig messagesConfig = configManager.getNewConfig("messages.yml");
+
     public ArrayList<Arena> arenas = new ArrayList<Arena>();
     public HashMap<Player, DodgePlayer> gamePlayers = new HashMap<Player, DodgePlayer>();
 
@@ -33,12 +36,10 @@ public final class DodgeBow extends JavaPlugin {
     public void onEnable() {
         instance = this;
         System.out.println(ChatColor.translateAlternateColorCodes('&', "&eDodgebow &7>> &aSuccessfully started"));
+        registerConfigs();
         registerEvents();
         registerCommands();
-        registerConfigs();
         LoadArenas.LoadArenas();
-
-        configManager = ConfigManager.getInstance();
     }
 
     @Override
@@ -61,8 +62,10 @@ public final class DodgeBow extends JavaPlugin {
     }
 
     private void registerConfigs() {
-        ConfigManager.getInstance().setPlugin(this);
-        ConfigManager.getInstance().checkAndLoadConfigs();
+        configManager = new SimpleConfigManager(this);
+
+        ConfigConfig.InitConfig();
+        MessagesConfig.InitConfig();
     }
 
     public static DodgeBow getInstance() {

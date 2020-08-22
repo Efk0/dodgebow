@@ -1,7 +1,8 @@
 package eu.ondrejmatys.dodgebow.arena;
 
+import com.google.common.xml.XmlEscapers;
 import eu.ondrejmatys.dodgebow.DodgeBow;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
+import eu.ondrejmatys.dodgebow.config.SimpleConfig;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,6 +11,8 @@ import java.util.ArrayList;
 
 
 public class ArenaCreator extends Message {
+
+    private static SimpleConfig messages = DodgeBow.getInstance().messagesConfig;
 
     public static void cmd(String command, String[] args, Player sender) {
 
@@ -77,7 +80,7 @@ public class ArenaCreator extends Message {
 
         Arena newArena = new Arena();
         newArena.name = name;
-        String decoded = String.format(ConfigManager.getInstance().getString("messages", "creation.create"), name);
+        String decoded = String.format(messages.getString("creation.create"), name);
         Message(decoded, sender);
     }
 
@@ -86,7 +89,7 @@ public class ArenaCreator extends Message {
             return;
         }
         arena.minPlayers = minPlayers;
-        String decoded = String.format(ConfigManager.getInstance().getString("messages", "creation.newmin"), minPlayers);
+        String decoded = String.format(messages.getString("creation.newmin"), minPlayers);
         Message(decoded, sender);
     }
 
@@ -95,7 +98,7 @@ public class ArenaCreator extends Message {
             return;
         }
         arena.maxPlayers = maxPlayers;
-        String decoded = String.format(ConfigManager.getInstance().getString("messages", "creation.newmax"), maxPlayers);
+        String decoded = String.format(messages.getString("creation.newmax"), maxPlayers);
         Message(decoded, sender);
     }
 
@@ -105,7 +108,7 @@ public class ArenaCreator extends Message {
             return;
         }
         arena.spawnLocations.add(sender.getLocation());
-        String decoded = String.format(ConfigManager.getInstance().getString("messages", "creation.newspawn"), arena.spawnLocations.size());
+        String decoded = String.format(messages.getString("creation.newspawn"), arena.spawnLocations.size());
         Message(decoded, sender);
     }
 

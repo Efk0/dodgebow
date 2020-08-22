@@ -1,13 +1,10 @@
 package eu.ondrejmatys.dodgebow.players;
 
+import eu.ondrejmatys.dodgebow.DodgeBow;
 import eu.ondrejmatys.dodgebow.arena.Arena;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
 import java.util.Random;
 
 public class DodgePlayer extends Message {
@@ -17,13 +14,15 @@ public class DodgePlayer extends Message {
     public StoredInventory inventory = new StoredInventory();
     public int lives = 3;
 
+    private DodgeBow plugin = DodgeBow.getInstance();
+
     public DodgePlayer(Arena arena, Player player) {
         this.arena = arena;
         this.player = player;
     }
 
     public void setLobbyInventory() {
-
+        // @TODO Lobby inventory for players
     }
 
     public void playerKilled(DodgePlayer killer) {
@@ -42,7 +41,7 @@ public class DodgePlayer extends Message {
     }
 
     private void alertDeath(Player killer) {
-        String decodedMessage = String.format(ConfigManager.getInstance().getString("messages", "arena.kill"), killer.getName(), player.getName(), lives);
+        String decodedMessage = String.format(plugin.messagesConfig.getString("arena.kill"), killer.getName(), player.getName(), lives);
         for (DodgePlayer player : arena.getAllPlayers()) {
             Message(decodedMessage, player.player);
             player.player.playSound(player.player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1F, 0.5F);

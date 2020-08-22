@@ -30,19 +30,19 @@ public class BaseCommand extends Message implements CommandExecutor {
                             switch (arena.status) {
                                 case IDLE:
                                     idle++;
-                                    status = "&aČEKÁNÍ";
+                                    status = "&aWAITING";
                                     break;
                                 case STARTING:
                                     idle++;
-                                    status = "&eSTARTUJE";
+                                    status = "&eSTARTING";
                                     break;
                                 case INGAME:
-                                    status = "&cVE HŘE";
+                                    status = "&cIN GAME";
                                     inGame++;
                                     break;
                                 case UNDONE:
                                     undone++;
-                                    status = "&7NEFUNGUJE";
+                                    status = "&7IN EDIT";
                                     break;
                             }
                             arenasList += status + "\n";
