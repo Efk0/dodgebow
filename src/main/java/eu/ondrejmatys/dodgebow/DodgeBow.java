@@ -1,5 +1,7 @@
 package eu.ondrejmatys.dodgebow;
 
+import com.google.common.io.ByteArrayDataInput;
+import com.google.common.io.ByteStreams;
 import eu.ondrejmatys.dodgebow.arena.Arena;
 import eu.ondrejmatys.dodgebow.arena.LoadArenas;
 import eu.ondrejmatys.dodgebow.commands.AdminCommands;
@@ -16,11 +18,12 @@ import eu.ondrejmatys.dodgebow.players.PlayerManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public final class DodgeBow extends JavaPlugin {
+public final class DodgeBow extends JavaPlugin implements PluginMessageListener {
 
     public static DodgeBow instance;
 
@@ -52,6 +55,9 @@ public final class DodgeBow extends JavaPlugin {
 
     private void registerEvents() {
         getServer().getPluginManager().registerEvents(new EventsManager(), this);
+
+        this.getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
+        this.getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", this);
     }
 
     private void registerCommands() {
@@ -70,5 +76,18 @@ public final class DodgeBow extends JavaPlugin {
 
     public static DodgeBow getInstance() {
         return instance;
+    }
+
+    @Override
+    public void onPluginMessageReceived(String channel, Player player, byte[] message) {
+        if (!channel.equals("BungeeCord")) {
+            return;
+        }
+        ByteArrayDataInput in = ByteStreams.newDataInput(message);
+        String subchannel = in.readUTF();
+        if (subchannel.equals("SomeSubChannel")) {
+            // Use the code sample in the 'Response' sections below to read
+            // the data.
+        }
     }
 }
