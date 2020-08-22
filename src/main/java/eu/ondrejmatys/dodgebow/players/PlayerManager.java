@@ -3,6 +3,7 @@ package eu.ondrejmatys.dodgebow.players;
 import eu.ondrejmatys.dodgebow.DodgeBow;
 import eu.ondrejmatys.dodgebow.arena.Arena;
 import eu.ondrejmatys.dodgebow.arena.Status;
+import eu.ondrejmatys.dodgebow.config.SimpleConfig;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.scoreboards.ScoreHelper;
 import org.bukkit.Bukkit;
@@ -81,5 +82,9 @@ public class PlayerManager extends Message {
         player.arena.spectors.remove(player);
         player.arena.alertLeave(player.player);
         plugin.gamePlayers.remove(player.player);
+
+        if (plugin.mainConfig.getBoolean("bungee.enabled")) {
+            player.player.kickPlayer("");
+        }
     }
 }

@@ -1,7 +1,7 @@
 package eu.ondrejmatys.dodgebow.arena;
 
 import eu.ondrejmatys.dodgebow.DodgeBow;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
+import eu.ondrejmatys.dodgebow.config.SimpleConfig;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
@@ -10,7 +10,6 @@ import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -42,6 +41,7 @@ public class Arena extends Message {
     public int countdown = 30;
 
     private DodgeBow plugin = DodgeBow.getInstance();
+    private SimpleConfig messages = plugin.messagesConfig;
 
     public Arena() {
         plugin.arenas.add(this);
@@ -125,11 +125,11 @@ public class Arena extends Message {
         for(DodgePlayer player : players) {
             Player bukkitPlayer = player.player;
             if (bukkitPlayer == joined) {
-                String messageDecoded = String.format(ConfigManager.getInstance().getString("messages", "arena.youjoin"), players.size(), maxPlayers);
+                String messageDecoded = String.format(messages.getString("arena.youjoin"), players.size(), maxPlayers);
                 Message(messageDecoded, bukkitPlayer);
                 continue;
             }
-            String messageDecoded = String.format(ConfigManager.getInstance().getString("messages", "arena.join"), joined.getName(), players.size(), maxPlayers);
+            String messageDecoded = String.format(messages.getString("arena.join"), joined.getName(), players.size(), maxPlayers);
             Message(messageDecoded, bukkitPlayer);
         }
         checkPlayerCount();
@@ -139,10 +139,10 @@ public class Arena extends Message {
         for(DodgePlayer player : players) {
             Player bukkitPlayer = player.player;
 
-            String messageDecoded = String.format(ConfigManager.getInstance().getString("messages", "arena.leave"), left.getName(), players.size(), maxPlayers);
+            String messageDecoded = String.format(messages.getString("arena.leave"), left.getName(), players.size(), maxPlayers);
             Message(messageDecoded, bukkitPlayer);
         }
-        String messageDecoded = String.format(ConfigManager.getInstance().getString("messages", "arena.youleave"), players.size(), maxPlayers);
+        String messageDecoded = String.format(messages.getString("arena.youleave"), players.size(), maxPlayers);
         Message(messageDecoded, left);
         checkPlayerCount();
 
@@ -221,7 +221,7 @@ public class Arena extends Message {
 
                 if (countdown > 5) {
                     if (countdown % 10 == 0) {
-                        String decoded = String.format(ConfigManager.getInstance().getString("messages", "arena.countdown"), countdown);
+                        String decoded = String.format(messages.getString( "arena.countdown"), countdown);
                         for(DodgePlayer player : players1) {
                             Message(decoded, player.player);
                             player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
@@ -229,7 +229,7 @@ public class Arena extends Message {
                         }
                     }
                 } else {
-                    String decoded = String.format(ConfigManager.getInstance().getString("messages", "arena.countdown"), countdown);
+                    String decoded = String.format(messages.getString("arena.countdown"), countdown);
                     for(DodgePlayer player : players1) {
                         Message(decoded, player.player);
                         player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
@@ -281,7 +281,7 @@ public class Arena extends Message {
 
                 if (countdown > 5) {
                     if (countdown % 10 == 0) {
-                        String decoded = String.format(ConfigManager.getInstance().getString("messages", "arena.immortalityCountDown"), countdown);
+                        String decoded = String.format(messages.getString("arena.immortalityCountDown"), countdown);
                         for(DodgePlayer player : players) {
                             Message(decoded, player.player);
                             player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
@@ -289,7 +289,7 @@ public class Arena extends Message {
                         }
                     }
                 } else {
-                    String decoded = String.format(ConfigManager.getInstance().getString("messages", "arena.immortalityCountDown"), countdown);
+                    String decoded = String.format(messages.getString("arena.immortalityCountDown"), countdown);
                     for(DodgePlayer player : players) {
                         Message(decoded, player.player);
                         player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
@@ -319,7 +319,7 @@ public class Arena extends Message {
 
     private void winStatement(DodgePlayer winner) {
         this.winner = winner;
-        String decodeString = String.format(ConfigManager.getInstance().getString("messages", "arena.win"), winner.player.getName());
+        String decodeString = String.format(messages.getString( "arena.win"), winner.player.getName());
         for (DodgePlayer player : getAllPlayers()) {
             player.player.removePotionEffect(PotionEffectType.INVISIBILITY);
             player.player.getInventory().clear();

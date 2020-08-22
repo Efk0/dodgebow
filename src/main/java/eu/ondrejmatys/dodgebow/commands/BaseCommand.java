@@ -20,6 +20,10 @@ public class BaseCommand extends Message implements CommandExecutor {
             if (args.length > 0) {
                 if (sender instanceof Player) {
                     if (args[0].equalsIgnoreCase("list")) {
+                        if (!sender.hasPermission("dodgebow.list")) {
+                            Message("messages", "errors.nopermission", (Player) sender);
+                            return false;
+                        }
                         int inGame = 0;
                         int idle = 0;
                         int undone = 0;
@@ -30,19 +34,19 @@ public class BaseCommand extends Message implements CommandExecutor {
                             switch (arena.status) {
                                 case IDLE:
                                     idle++;
-                                    status = "&aČEKÁNÍ";
+                                    status = "&aWAITING";
                                     break;
                                 case STARTING:
                                     idle++;
-                                    status = "&eSTARTUJE";
+                                    status = "&eSTARTING";
                                     break;
                                 case INGAME:
-                                    status = "&cVE HŘE";
+                                    status = "&cIN GAME";
                                     inGame++;
                                     break;
                                 case UNDONE:
                                     undone++;
-                                    status = "&7NEFUNGUJE";
+                                    status = "&7IN EDIT";
                                     break;
                             }
                             arenasList += status + "\n";
@@ -55,6 +59,10 @@ public class BaseCommand extends Message implements CommandExecutor {
 
                     if (args[0].equalsIgnoreCase("join")) {
                         if (args.length > 1) {
+                            if (!sender.hasPermission("dodgebow.join")) {
+                                Message("messages", "errors.nopermission", (Player) sender);
+                                return false;
+                            }
                             Arena arena = ArenaCreator.findArenaWithName(args[1]);
                             if (arena == null) {
                                 Message("messages", "errors.arenanotexists", (Player) sender);

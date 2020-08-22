@@ -1,7 +1,6 @@
 package eu.ondrejmatys.dodgebow.arena;
 
 import eu.ondrejmatys.dodgebow.DodgeBow;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
