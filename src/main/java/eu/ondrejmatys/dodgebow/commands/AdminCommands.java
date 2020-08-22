@@ -2,7 +2,7 @@ package eu.ondrejmatys.dodgebow.commands;
 
 import eu.ondrejmatys.dodgebow.DodgeBow;
 import eu.ondrejmatys.dodgebow.arena.ArenaCreator;
-import eu.ondrejmatys.dodgebow.config.ConfigManager;
+import eu.ondrejmatys.dodgebow.config.SimpleConfigManager;
 import eu.ondrejmatys.dodgebow.menus.AdminMenu;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import org.bukkit.command.Command;
@@ -21,7 +21,9 @@ public class AdminCommands extends Message implements CommandExecutor {
         if (command.getName().equalsIgnoreCase("dodgeadmin")) {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("reload")) {
-                    DodgeBow.getInstance().configManager = ConfigManager.getInstance();
+                    SimpleConfigManager configManager = DodgeBow.getInstance().configManager;
+                    configManager.getNewConfig("config.yml").reloadConfig();
+                    configManager.getNewConfig("messages.yml").reloadConfig();
                     Message("messages", "reload", (Player) sender);
 
                     return false;
