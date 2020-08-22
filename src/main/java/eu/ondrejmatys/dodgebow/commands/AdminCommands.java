@@ -19,6 +19,10 @@ public class AdminCommands extends Message implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (command.getName().equalsIgnoreCase("dodgeadmin")) {
+            if (!sender.hasPermission("dodgebow.admin")) {
+                Message("messages", "errors.nopermission", (Player) sender);
+                return false;
+            }
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("reload")) {
                     SimpleConfigManager configManager = DodgeBow.getInstance().configManager;
