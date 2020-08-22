@@ -23,7 +23,6 @@ public class MessagesConfig {
         config.setIfNot("errors.arenaingame2", "&cArena is in game!");
         config.setIfNot("errors.cannotedit", "&cYou cannot edit running arena. Please switch to editing mode with /dodgeadmin arena edit <arena>");
         config.setIfNot("errors.cannotjoin", "&cThis arena is currently not available");
-        config.setIfNot("errors.newtestcmd", "Testičko");
 
         config.setIfNot("arena", "", "Arena messages");
         config.setIfNot("arena.join", "&e%s &a joined to the game &7(&e%s&f/&e%s&7)");
