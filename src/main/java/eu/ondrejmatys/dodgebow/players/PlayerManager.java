@@ -82,5 +82,9 @@ public class PlayerManager extends Message {
         player.arena.spectors.remove(player);
         player.arena.alertLeave(player.player);
         plugin.gamePlayers.remove(player.player);
+
+        if (plugin.mainConfig.getBoolean("bungee.enabled")) {
+            player.player.kickPlayer("");
+        }
     }
 }
