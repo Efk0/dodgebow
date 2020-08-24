@@ -74,7 +74,7 @@ public class MessagesConfig {
                 "",
                 "&a&lCountdown: &r%countdown%",
                 "",
-                "&a&lPlayers: &r%min%/%max%",
+                "&a&lPlayers: &r%count%/%max%",
                 "",
                 "&a&lArena: &r%arena%"
 
