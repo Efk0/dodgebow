@@ -46,6 +46,7 @@ public class ArenaScoreboard {
                 }
                 helper.setSlot(i + 1, Placeholders.translate(line));
             }
+            Collections.reverse(lines);
         }
     }
 

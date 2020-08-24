@@ -281,7 +281,7 @@ public class Arena extends Message {
 
                 if (countdown > 5) {
                     if (countdown % 10 == 0) {
-                        String decoded = String.format(messages.getString("arena.immortalityCountDown"), countdown);
+                        String decoded = String.format(messages.getString("arena.immortalityCountdown"), countdown);
                         for(DodgePlayer player : players) {
                             Message(decoded, player.player);
                             player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
@@ -289,7 +289,7 @@ public class Arena extends Message {
                         }
                     }
                 } else {
-                    String decoded = String.format(messages.getString("arena.immortalityCountDown"), countdown);
+                    String decoded = String.format(messages.getString("arena.immortalityCountdown"), countdown);
                     for(DodgePlayer player : players) {
                         Message(decoded, player.player);
                         player.player.playSound(player.player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 3F, 0.5F);
