@@ -5,6 +5,7 @@ import eu.ondrejmatys.dodgebow.arena.Arena;
 import eu.ondrejmatys.dodgebow.arena.Status;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
+import eu.ondrejmatys.dodgebow.players.DodgeStats;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Arrow;
@@ -55,6 +56,8 @@ public class EventsManager extends Message implements Listener {
 
             event.getPlayer().kickPlayer(ChatColor.translateAlternateColorCodes('&', plugin.messagesConfig.getString("errors.cannotjoin")));
         }
+
+        plugin.playerXStats.put(event.getPlayer(), new DodgeStats(event.getPlayer()));
     }
 
     @EventHandler
