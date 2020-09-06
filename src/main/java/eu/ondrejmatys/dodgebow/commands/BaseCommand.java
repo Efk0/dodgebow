@@ -1,10 +1,14 @@
 package eu.ondrejmatys.dodgebow.commands;
 
+import com.ibm.dtfj.phd.parser.Base;
 import eu.ondrejmatys.dodgebow.DodgeBow;
 import eu.ondrejmatys.dodgebow.arena.Arena;
 import eu.ondrejmatys.dodgebow.arena.ArenaCreator;
+import eu.ondrejmatys.dodgebow.menus.BaseMenu;
+import eu.ondrejmatys.dodgebow.menus.BaseStatsMenu;
 import eu.ondrejmatys.dodgebow.messages.Message;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -77,6 +81,20 @@ public class BaseCommand extends Message implements CommandExecutor {
                         PlayerManager.leavePlayerFromGame(plugin.gamePlayers.get((Player) sender));
                     }
 
+                    if (args[0].equalsIgnoreCase("stats")) {
+                        if (!sender.hasPermission("dodgebow.stats")) {
+                            Message("messages", "errors.nopermission", (Player) sender);
+                            return false;
+                        }
+                        if (args.length > 1) {
+                            BaseStatsMenu.BaseStatsMenu((Player) sender, args[1]);
+                            return false;
+                        }
+                        BaseStatsMenu.BaseStatsMenu((Player) sender, sender.getName());
+                        return false;
+                    }
+
+                    BaseMenu.BaseMenu((Player) sender);
                     return false;
                 }
 

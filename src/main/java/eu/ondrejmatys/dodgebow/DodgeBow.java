@@ -12,9 +12,14 @@ import eu.ondrejmatys.dodgebow.config.SimpleConfig;
 import eu.ondrejmatys.dodgebow.config.SimpleConfigManager;
 import eu.ondrejmatys.dodgebow.config.configs.ConfigConfig;
 import eu.ondrejmatys.dodgebow.config.configs.MessagesConfig;
+import eu.ondrejmatys.dodgebow.config.configs.MysqlConfig;
 import eu.ondrejmatys.dodgebow.events.EventsManager;
 import eu.ondrejmatys.dodgebow.players.DodgePlayer;
+import eu.ondrejmatys.dodgebow.players.DodgeStats;
 import eu.ondrejmatys.dodgebow.players.PlayerManager;
+import eu.ondrejmatys.dodgebow.stats.LocalPlayerStats;
+import eu.ondrejmatys.dodgebow.stats.MySqlPlayerStats;
+import eu.ondrejmatys.dodgebow.stats.PlayerStats;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -28,12 +33,15 @@ public final class DodgeBow extends JavaPlugin implements PluginMessageListener 
     public static DodgeBow instance;
 
     public SimpleConfigManager configManager = new SimpleConfigManager(this);
+    public PlayerStats statsManager;
 
     public SimpleConfig mainConfig = configManager.getNewConfig("config.yml");
     public SimpleConfig messagesConfig = configManager.getNewConfig("messages.yml");
+    public SimpleConfig mysqlConfig = configManager.getNewConfig("mysql.yml");
 
     public ArrayList<Arena> arenas = new ArrayList<Arena>();
     public HashMap<Player, DodgePlayer> gamePlayers = new HashMap<Player, DodgePlayer>();
+    public HashMap<Player, DodgeStats> playerXStats = new HashMap<>();
 
     @Override
     public void onEnable() {
@@ -42,6 +50,7 @@ public final class DodgeBow extends JavaPlugin implements PluginMessageListener 
         registerConfigs();
         registerEvents();
         registerCommands();
+        loadDatabase();
         LoadArenas.LoadArenas();
     }
 
@@ -72,6 +81,15 @@ public final class DodgeBow extends JavaPlugin implements PluginMessageListener 
 
         ConfigConfig.InitConfig();
         MessagesConfig.InitConfig();
+        MysqlConfig.InitConfig();
+    }
+
+    private void loadDatabase() {
+        if (mysqlConfig.getBoolean("enabled")) {
+            statsManager = new MySqlPlayerStats();
+        } else {
+            statsManager = new LocalPlayerStats();
+        }
     }
 
     public static DodgeBow getInstance() {

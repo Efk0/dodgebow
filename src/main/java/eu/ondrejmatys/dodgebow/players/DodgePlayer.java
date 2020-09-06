@@ -12,6 +12,7 @@ public class DodgePlayer extends Message {
     public Arena arena;
     public Player player;
     public StoredInventory inventory = new StoredInventory();
+    public DodgeStats stats;
     public int lives = 3;
 
     private DodgeBow plugin = DodgeBow.getInstance();
@@ -19,6 +20,7 @@ public class DodgePlayer extends Message {
     public DodgePlayer(Arena arena, Player player) {
         this.arena = arena;
         this.player = player;
+        this.stats = plugin.playerXStats.get(player);
     }
 
     public void setLobbyInventory() {
@@ -33,11 +35,13 @@ public class DodgePlayer extends Message {
             return;
         }
         player.setHealth(lives * 2);
+        stats.setDeaths(stats.getDeaths() + 1);
         arena.refreshScoreboard();
         alertDeath(killer.player);
     }
 
     public void playerKiller(DodgePlayer killed) {
+        stats.setKills(stats.getKills() + 1);
     }
 
     private void alertDeath(Player killer) {

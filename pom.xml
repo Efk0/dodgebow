@@ -6,7 +6,7 @@
 
     <groupId>eu.ondrejmatys</groupId>
     <artifactId>DodgeBow</artifactId>
-    <version>0.0.3-PRE-ALPHA</version>
+    <version>0.0.4-PRE-ALPHA</version>
     <packaging>jar</packaging>
 
     <name>DodgeBow</name>

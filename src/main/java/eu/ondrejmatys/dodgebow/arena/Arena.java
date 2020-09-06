@@ -257,6 +257,8 @@ public class Arena extends Message {
 
             giveStartItems(player.player);
 
+            player.stats.setGames_played(player.stats.getGames_played() + 1);
+
             spawnIndex++;
             if (spawnIndex >= spawnLocations.size() - 1) {
                 spawnIndex = 0;
@@ -319,6 +321,7 @@ public class Arena extends Message {
 
     private void winStatement(DodgePlayer winner) {
         this.winner = winner;
+        winner.stats.setWins(winner.stats.getWins() + 1);
         String decodeString = String.format(messages.getString( "arena.win"), winner.player.getName());
         for (DodgePlayer player : getAllPlayers()) {
             player.player.removePotionEffect(PotionEffectType.INVISIBILITY);
